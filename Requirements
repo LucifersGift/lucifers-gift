@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+bip-utils
+cryptography
+web3
+solana
+solders
+qrcode[pil]
+python-dotenv
+passlib[bcrypt]
+python-jose[cryptography]
