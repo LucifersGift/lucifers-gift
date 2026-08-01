@@ -37,16 +37,12 @@
       width: 100%;
       margin: 8px 0;
     }
-    button:active {
-      background: #e07b00;
-    }
     .box {
       background: #1a1a1a;
       border: 1px solid #333;
       border-radius: 10px;
       padding: 16px;
       margin-top: 20px;
-      word-break: break-all;
     }
     .warning {
       background: #2a1f12;
@@ -58,10 +54,14 @@
     }
     .seed {
       background: #111;
-      padding: 12px;
+      padding: 14px;
       border-radius: 6px;
-      margin: 10px 0;
+      margin: 12px 0;
       font-size: 15px;
+      line-height: 1.6;
+      word-spacing: 4px;
+      white-space: pre-wrap;       /* keeps it as one block */
+      overflow-wrap: break-word;
     }
     .small {
       font-size: 13px;
@@ -88,8 +88,6 @@
   <div id="output"></div>
 
   <script>
-    // Larger word list for better randomness (demo version)
-    // For production use a full BIP39 library
     const wordList = [
       "abandon","ability","able","about","above","absent","absorb","abstract","absurd","abuse",
       "access","accident","account","accuse","achieve","acid","acoustic","acquire","across","act",
@@ -310,7 +308,6 @@
 
       currentMnemonic = mnemonic.join(" ");
       accountIndex = 0;
-
       showResult(currentMnemonic, accountIndex);
     }
 
@@ -324,23 +321,17 @@
     }
 
     function showResult(seed, index) {
-      document.getElementById("output").innerHTML = `
-        <div class="box">
-          <strong>\( {index === 0 ? "New Wallet" : "Extra Account"} (# \){index})</strong><br><br>
-          
-          <strong>24-Word Seed Phrase:</strong>
-          <div class="seed">${seed}</div>
-          
-          <p class="small">
-            This is a demo seed using an expanded word list.<br>
-            For real use, import a proper BIP39 seed into BlueWallet or Electrum.
-          </p>
-          
-          <button onclick="navigator.clipboard.writeText('${seed}')">Copy Seed Phrase</button>
-        </div>
-      `;
+      const title = index === 0 ? "New Wallet" : "Extra Account";
+      
+      document.getElementById("output").innerHTML = 
+        '<div class="box">' +
+          '<strong>' + title + ' (#' + index + ')</strong><br><br>' +
+          '<strong>24-Word Seed Phrase:</strong>' +
+          '<div class="seed">' + seed + '</div>' +
+          '<p class="small">This is a demo seed using an expanded word list.<br>For real use, import a proper BIP39 seed into BlueWallet or Electrum.</p>' +
+          '<button onclick="navigator.clipboard.writeText(\'' + seed + '\')">Copy Seed Phrase</button>' +
+        '</div>';
     }
   </script>
 </body>
 </html>
-<!-- rebuild -->
